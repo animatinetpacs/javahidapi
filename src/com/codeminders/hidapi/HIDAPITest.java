@@ -11,10 +11,10 @@ public class HIDAPITest
 {
     private static final long READ_UPDATE_DELAY_MS = 50L;
 
-    static
-    {
-        System.loadLibrary("hidapi-jni");
-    }
+//    static
+//    {
+//        System.loadLibrary("hidapi-jni");
+//    }
 
     // "Afterglow" controller for PS3
     static final int VENDOR_ID = 3695;
@@ -26,6 +26,7 @@ public class HIDAPITest
      */
     public static void main(String[] args) throws IOException
     {
+        ClassPathLibraryLoader.loadNativeHIDLibrary();
         listDevices();
         readDevice();
     }
