@@ -21,18 +21,6 @@
       <developerConnection>scm:hg:https://code.google.com/p/javahidapi</developerConnection>
       <url>http://code.google.com/p/javahidapi</url>
    </scm>
-   <distributionManagement>
-       <repository>
-           <id>main</id>
-           <name>Animati Release Repository</name>
-           <url>http://archiva.animati.com.br/repository/main/</url>
-       </repository>
-       <snapshotRepository>
-           <id>main-dev</id>
-           <name>Animati Snapshots Repository</name>
-           <url>http://archiva.animati.com.br/repository/main-dev/</url>
-       </snapshotRepository>
-   </distributionManagement>
    <developers>
     <developer>
       <id>lord</id>
