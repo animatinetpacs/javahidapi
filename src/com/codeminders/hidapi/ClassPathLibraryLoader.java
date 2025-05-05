@@ -1,11 +1,16 @@
 package com.codeminders.hidapi;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ClassPathLibraryLoader {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClassPathLibraryLoader.class);
 
     private static final String[] HID_LIB_NAMES = { "/native/linux/libhidapi-jni-64.so",
             "/native/linux/libhidapi-jni-32.so", "/native/mac/libhidapi-jni-64.jnilib",
@@ -17,33 +22,23 @@ public class ClassPathLibraryLoader {
         for (String path : HID_LIB_NAMES) {
             try {
                 // have to use a stream
-                InputStream in = ClassPathLibraryLoader.class.getResourceAsStream(path);
-                if (in != null) {
-                    try {
-                        // always write to different location
-                        String tempName = path.substring(path.lastIndexOf('/') + 1);
-                        File fileOut = File.createTempFile(tempName.substring(0, tempName.lastIndexOf('.')),
-                                tempName.substring(tempName.lastIndexOf('.'), tempName.length()));
-                        fileOut.deleteOnExit();
+                // always write to different location
+                String tempName = path.substring(path.lastIndexOf('/') + 1);
+                File fileOut = File.createTempFile(tempName.substring(0, tempName.lastIndexOf('.')),
+                        tempName.substring(tempName.lastIndexOf('.'), tempName.length()));
+                LOGGER.trace("Trying HID library loading from {}.", fileOut);
+                fileOut.deleteOnExit();
 
-                        OutputStream out = new FileOutputStream(fileOut);
-                        byte[] buf = new byte[1024];
-                        int len;
-                        while ((len = in.read(buf)) > 0) {
-                            out.write(buf, 0, len);
-                        }
-
-                        out.close();
-                        Runtime.getRuntime().load(fileOut.toString());
-                        isHIDLibLoaded = true;
-                    } finally {
-                        in.close();
-                    }
+                try (InputStream in = ClassPathLibraryLoader.class.getResourceAsStream(path)) {
+                    Files.copy(in, fileOut.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    Runtime.getRuntime().load(fileOut.toString());
+                    isHIDLibLoaded = true;
+                    LOGGER.info("Successfully loaded library {} from: {}", tempName, fileOut.toString());
                 }
             } catch (Exception e) {
-                // ignore
+                LOGGER.warn("Error loading library: {}. Message: {} - {}.", path, e.getClass().getName(), e.getMessage());
             } catch (UnsatisfiedLinkError e) {
-                // ignore
+                LOGGER.warn("Error loading library: {}. Message: {} - {}.", path, e.getClass().getName(), e.getMessage());
             }
 
             if (isHIDLibLoaded) {
