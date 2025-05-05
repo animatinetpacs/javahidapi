@@ -7,20 +7,19 @@ import java.io.IOException;
  *
  * @author lord
  */
-public class HIDDeviceNotFoundException extends IOException
-{
+public class HIDDeviceNotFoundException extends IOException {
     /**
-     * Constructs a <code>HIDDeviceNotFoundException</code> with no detailed error message.
+     * Constructs a <code>HIDDeviceNotFoundException</code> with no detailed error
+     * message.
      */
-    public HIDDeviceNotFoundException()
-    {
+    public HIDDeviceNotFoundException() {
     }
-    
+
     /**
-     * Constructs a <code>HIDDeviceNotFoundException</code> with the specified error message.
+     * Constructs a <code>HIDDeviceNotFoundException</code> with the specified error
+     * message.
      */
-    public HIDDeviceNotFoundException(String message)
-    {
+    public HIDDeviceNotFoundException(String message) {
         super(message);
     }
 }
