@@ -123,15 +123,15 @@ public class HIDDeviceInfo {
     /**
      * Open a HID device using a path name from this class. Used from JNI.
      *
-     * @return return a reference to the <code>HIDDevice<code> object
+     * @return return a reference to the <code>HIDDevice</code> object
      * @throws IOException
      */
     public native HIDDevice open() throws IOException;
 
     /**
-     * Override method for conversion this object to <code>String<code> object.
+     * Override method for conversion this object to <code>String</code> object.
      *
-     * @return return a reference to the <code>String<code> object
+     * @return return a reference to the <code>String</code> object
      */
     @Override
     public String toString() {

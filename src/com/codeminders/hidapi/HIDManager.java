@@ -33,7 +33,7 @@ public class HIDManager {
 
     /**
      * Release underlying HID layer. This method must be called when
-     * <code>HIDManager<code> object is no longer needed. Failure to do so could
+     * <code>HIDManager</code> object is no longer needed. Failure to do so could
      * cause memory leaks or unterminated threads. It is safe to call this method
      * multiple times.
      *
@@ -70,7 +70,7 @@ public class HIDManager {
      * Convenience method to find and open device by path
      * 
      * @param path USB device path
-     * @return open device reference <code>HIDDevice<code> object
+     * @return open device reference <code>HIDDevice</code> object
      * @throws IOException                in case of internal error
      * @throws HIDDeviceNotFoundException if devive was not found
      */
@@ -89,7 +89,7 @@ public class HIDManager {
      * 
      * @param vendor_id     USB vendor ID
      * @param product_id    USB product ID
-     * @param serial_number USB device serial number (could be <code>null<code>)
+     * @param serial_number USB device serial number (could be <code>null</code>)
      * @return open device
      * @throws IOException                in case of internal error
      * @throws HIDDeviceNotFoundException if devive was not found
