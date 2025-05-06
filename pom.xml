@@ -16,6 +16,7 @@
 
         <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
         <maven-enforcer-plugin.version>3.5.0</maven-enforcer-plugin.version>
+        <maven-release-plugin.version>3.1.1</maven-release-plugin.version>
 
         <slf4j.version>1.7.32</slf4j.version>
         <junit.version>4.13.2</junit.version>
@@ -31,9 +32,9 @@
         </license>
     </licenses>
     <scm>
-        <connection>scm:hg:http://code.google.com/p/javahidapi</connection>
-        <developerConnection>scm:hg:https://code.google.com/p/javahidapi</developerConnection>
-        <url>http://code.google.com/p/javahidapi</url>
+        <connection>scm:git:https://github.com/animatinetpacs/javahidapi.git</connection>
+        <developerConnection>scm:git:https://github.com/animatinetpacs/javahidapi.git</developerConnection>
+        <url>https://github.com/animatinetpacs/javahidapi</url>
     </scm>
     <developers>
         <developer>
@@ -120,6 +121,22 @@
                 <plugin>
                     <artifactId>maven-enforcer-plugin</artifactId>
                     <version>${maven-enforcer-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>${maven-release-plugin.version}</version>
+                    <configuration>
+                        <arguments>-DskipTests -DaltDeploymentRepository=${build.REPOSITORY_ID}::default::${build.REPOSITORY_URL}</arguments>
+                        <tagNameFormat>v@{project.version}</tagNameFormat>
+                        <allowTimestampedSnapshots>true</allowTimestampedSnapshots>
+                        <preparationGoals>clean install</preparationGoals>
+                        <goals>deploy</goals>
+                        <scmCommentPrefix>[maven-release-plugin]</scmCommentPrefix>
+                        <developmentVersion>${build.NEXT_DEVELOPMENT_VERSION}</developmentVersion>
+                        <releaseVersion>${build.CURRENT_VERSION_NUMBER}</releaseVersion>
+                        <useReleaseProfile>true</useReleaseProfile>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
